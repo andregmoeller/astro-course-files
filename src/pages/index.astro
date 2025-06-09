@@ -1,5 +1,5 @@
 ---
-
+import Button from "../components/Button.astro";
 ---
 
 <!doctype html>
@@ -7,7 +7,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Astro Components</title>
   </head>
-  <body> HOME </body>
+  <body>
+    <h1>Astro Components</h1>
+    <Button color="#333" id="my-id" aria-label="click me btn">Btn Text</Button>
+  </body>
 </html>
