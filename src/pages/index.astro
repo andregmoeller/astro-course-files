@@ -1,5 +1,6 @@
 ---
 import Button from "../components/Button.astro";
+import Counter from "../components/Counter";
 import Heading from "../components/Heading.astro";
 ---
 
@@ -13,5 +14,6 @@ import Heading from "../components/Heading.astro";
   <body>
     <Heading tag="h2" size="h5">Astro Components</Heading>
     <Button color="#333" id="my-id" aria-label="click me btn">Btn Text</Button>
+    <Counter client:only="react" />
   </body>
 </html>
