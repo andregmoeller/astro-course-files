@@ -1,4 +1,6 @@
 ---
+import Link from "../components/Link.astro";
+
 const { title } = Astro.props;
 ---
 
@@ -11,8 +13,8 @@ const { title } = Astro.props;
   </head>
   <body>
     <nav>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
+      <Link href="/">Home</Link>
+      <Link href="/about">About</Link>
     </nav>
     <slot />
   </body>
