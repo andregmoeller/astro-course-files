@@ -1,5 +1,8 @@
 ---
+import PricingCard from "../components/PricingCard.astro";
+import cards from "../data/cardData.json";
 
+import "../styles/global.css";
 ---
 
 <!doctype html>
@@ -9,5 +12,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body> HOME </body>
+  <body>
+    <section aria-label="Pricing">
+      {cards.map((card) => <PricingCard cardData={card} />)}
+    </section>
+      <style>
+        [aria-label="Pricing"] {
+          align-items: flex-start;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1.5rem;
+        }
+    </style>
+  </body>
 </html>
