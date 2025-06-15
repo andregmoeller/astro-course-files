@@ -1,48 +1,52 @@
 ---
 import Button from "@/components/Button.astro";
 
-type Props = {
-  cardData: {
-    tier: string;
-    most_popular: boolean;
-    amount_per_month: number;
+export type CardProps = {
+  tier: string;
+  most_popular: boolean;
+  amount_per_month: number;
+  title: string;
+  description: string;
+  btn_text: string;
+  features: {
     title: string;
-    description: string;
-    btn_text: string;
-    features: {
-      title: string;
-      checked: boolean;
-    }[];
-  };
+    checked: boolean;
+  }[];
+};
+
+type Props = {
+  cardData: CardProps;
 };
 
 const { cardData } = Astro.props;
 const { tier,most_popular, amount_per_month, title, description, btn_text, features } = cardData;
 ---
 
-<article>
-  <p>{tier}</p>
-  {most_popular && <p>Most Populer</p>}
-  <div>
-    <div>
-      <span>$</span>
-      <span>{amount_per_month}</span>
-      {amount_per_month > 0 && <span>/mo</span>}
+<article class:list={[{ "dark-shadow": most_popular }]}>
+  <p class:list={["tier", tier.toLowerCase()]}>{tier}</p>
+  {most_popular && <p class="badge">Most Popular</p>}
+  <div class="details">
+    <div class="amt">
+      <span class="sign">$</span>
+      <span class="num">{amount_per_month}</span>
+      {amount_per_month > 0 && <span class="mo">/mo</span>}
     </div>
-    <h3>{title}</h3>
-    <p>{description}</p>
+    <h3 class="title">{title}</h3>
+    <p class="desc">{description}</p>
   </div>
-  <Button id={tier.toLowerCase()}>{btn_text}</Button>
-  <div>
+  <Button id={tier.toLowerCase()} theme={tier}>{btn_text}</Button>
+  <ul class="features">
     {
       features.map((f) => (
-        <div>
+        <li class="feature">
+          {/* icon */}
           {f.checked ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"
               height="32"
               viewBox="0 0 15 15"
+              class="green"
             >
               <path
                 fill="currentColor"
@@ -57,6 +61,7 @@ const { tier,most_popular, amount_per_month, title, description, btn_text, featu
               width="32"
               height="32"
               viewBox="0 0 15 15"
+              class="red"
             >
               <path
                 fill="currentColor"
@@ -66,15 +71,113 @@ const { tier,most_popular, amount_per_month, title, description, btn_text, featu
               />
             </svg>
           )}
+
+          {/* text */}
           <p>{f.title}</p>
-        </div>
+        </li>
       ))
     }
-  </div>
+  </ul>
 </article>
+
 <style>
   article {
-    border: 2px solid black;
-    padding: 0.5rem;
+    background-color: var(--clr-bkg);
+    box-shadow: var(--shadow--light);
+    border-radius: var(--rounded);
+    display: grid;
+    flex: 1 1 28%;
+    gap: var(--space--xl);
+    padding: var(--space--xxl) var(--space--lg) var(--space--lg);
+    position: relative;
+    &.dark-shadow {
+      box-shadow: var(--shadow--dark);
+    }
+  }
+
+  .badge {
+    background-color: var(--clr-text);
+    color: var(--clr-bkg);
+    font-size: var(--fs--xs);
+    justify-self: center;
+    max-width: fit-content;
+    padding: var(--space--sm);
+    text-transform: uppercase;
+  }
+
+  .details {
+    display: grid;
+    gap: var(--space--sm);
+    place-items: center;
+    text-align: center;
+
+    .amt {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      max-width: fit-content;
+      
+      .num {
+        font-size: var(--fs--lg);
+        line-height: 1;
+      }
+
+      .mo {
+        align-self: end;
+      }
+    }
+
+    .title {
+      font-size: var(--fs--md);
+      text-transform: uppercase;
+    }
+
+    .desc {
+      max-width: 60%;
+    }
+  }
+
+  .features {
+    list-style: none;
+    margin-inline: auto;
+    .feature {
+      align-items: center;
+      display: flex;
+      gap: 4px;
+      
+      .green {
+        color: var(--clr-accent-green);
+        width: 1rem;
+      }
+
+      .red {
+        color: var(--clr-accent-red);
+        width: 1rem;
+      }
+    }
+  }
+
+  .tier {
+    --local_background: var(--clr-bkg);
+    --local_color: var(--clr-accent-purple);
+    
+    background-color: var(--local_background);
+    border-top-left-radius: var(--rounded);
+    border-top-right-radius: var(--rounded);
+    color: var(--local_color);
+    padding-block: var(--space--sm);
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;  
+    
+    &.pro {
+      --local_background: var(--clr-accent-purple);
+      --local_color: var(--clr-bkg);
+    }
+    
+    &.enterprise {
+      --local_background: var(--clr-accent-yellow);
+      --local_color: var(--clr-bkg);
+    }
   }
 </style>
