@@ -10,6 +10,7 @@ if (!post) {
 }
 
 const { Content, headings } = await render(post);
+const author = await getEntry("team", post.data.author.id);
 ---
 
 <!doctype html>
@@ -21,6 +22,7 @@ const { Content, headings } = await render(post);
   </head>
   <body>
     <h1>{post.data.title}</h1>
+    {author && <p>{author.data.name}</p>}
     <img src={post.data.cover.src} alt={post.data.coverAlt} />
     <ul>
       {
