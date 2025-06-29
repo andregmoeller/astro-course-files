@@ -20,14 +20,17 @@ export const collections = {
     loader: glob({
       pattern: "src/data/posts/**/*.md",
     }),
-    schema: z.object({
-      title: z.string(),
-      tags: z.array(z.string()),
-      pubDate: z.coerce.date(),
-      isDraft: z.boolean(),
-      canonicalURL: z.string().optional(),
-      author: reference("team"),
-    }),
+    schema: ({ image }) => 
+      z.object({
+        title: z.string(),
+        tags: z.array(z.string()),
+        pubDate: z.coerce.date(),
+        isDraft: z.boolean(),
+        canonicalURL: z.string().optional(),
+        author: reference("team"),
+        cover: image(),
+        coverAlt: z.string(),
+      }),
   }),
   team: defineCollection({
     loader: file("src/data/team.json"),

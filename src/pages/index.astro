@@ -33,7 +33,12 @@ const postsWithAuthors = await Promise.all(
     <ul>
       {postsWithAuthors.map(({ postData, authorData }) => (
         <li>
-          {postData.title} by {authorData ? authorData.name : "unknown author"}
+          <p>
+            <img src={postData.cover.src} alt={postData.coverAlt} />
+          </p>
+          <p>
+            {postData.title} by {authorData ? authorData.name : "unknown author"}
+          </p>
         </li>
       ))}
     </ul>
