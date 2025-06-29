@@ -2,6 +2,7 @@
 title: Post 3
 tags: ["product", "tutorial"]
 pubDate: 2025-02-04
+author: "3"
 isDraft: false
 ---
 

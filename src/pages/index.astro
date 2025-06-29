@@ -1,9 +1,20 @@
 ---
+import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
 
 const teamData = await getCollection("team");
 const todos = await getCollection("todos");
 const posts = await getCollection("posts", ({ data }) => data.title);
+const postsWithAuthors = await Promise.all(
+  posts.map(async (post) => {
+    const author = await getEntry(post.data.author);
+    return {
+      postData: post.data,
+      postId: post.id,
+      authorData: author ? author.data : null,
+    };
+  })
+);
 ---
 
 <!doctype html>
@@ -20,7 +31,11 @@ const posts = await getCollection("posts", ({ data }) => data.title);
       {todos.map((t) => <li>{t.data.title}</li>)}
     </ul>
     <ul>
-      {posts.map((p) => <li>{p.data.title}</li>)}
+      {postsWithAuthors.map(({ postData, authorData }) => (
+        <li>
+          {postData.title} by {authorData ? authorData.name : "unknown author"}
+        </li>
+      ))}
     </ul>
   </body>
 </html>

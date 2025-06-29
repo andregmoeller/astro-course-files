@@ -1,5 +1,5 @@
 import { file, glob } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
+import { defineCollection, reference, z } from "astro:content";
 
 export const collections = {
   todos: defineCollection({
@@ -26,6 +26,7 @@ export const collections = {
       pubDate: z.coerce.date(),
       isDraft: z.boolean(),
       canonicalURL: z.string().optional(),
+      author: reference("team"),
     }),
   }),
   team: defineCollection({

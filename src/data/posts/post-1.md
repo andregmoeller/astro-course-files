@@ -2,6 +2,7 @@
 title: Post 1
 tags: ["product", "tutorial"]
 pubDate: 2025-02-08
+author: "1"
 isDraft: false
 canonicalURL: https://mysite.com/sample/
 ---
