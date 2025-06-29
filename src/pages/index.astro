@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 
 const teamData = await getCollection("team");
 const todos = await getCollection("todos");
+const posts = await getCollection("posts", ({ data }) => data.title);
 ---
 
 <!doctype html>
@@ -17,6 +18,9 @@ const todos = await getCollection("todos");
     {teamData.map((p) => <p>{p.data.name}</p>)}
     <ul>
       {todos.map((t) => <li>{t.data.title}</li>)}
+    </ul>
+    <ul>
+      {posts.map((p) => <li>{p.data.title}</li>)}
     </ul>
   </body>
 </html>
