@@ -14,7 +14,10 @@ export const collections = {
     schema: z.object({
       title: z.string(),
       completed: z.boolean(),
-    }),
+    }).transform((data) => ({
+      taskName: data.title,
+      isComplete: data.completed,
+    })),
   }),
   posts: defineCollection({
     loader: glob({
