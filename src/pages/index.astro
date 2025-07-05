@@ -1,13 +1,19 @@
 ---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layout/BaseLayout.astro";
 
+const posts = await getCollection("posts");
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body> HOME </body>
-</html>
+<BaseLayout>
+  <h1>Blog Posts</h1>
+  <ul role="list">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={post.data.slug}>{post.data.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
