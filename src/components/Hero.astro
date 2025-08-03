@@ -1,5 +1,6 @@
 ---
 import katie from "@/assets/avatar.jpeg";
+import Heading from "@/components/ui/Heading.astro";
 
 const links = [
   {
@@ -11,7 +12,7 @@ const links = [
 
 <section aria-label="Hero section" class="hero">
   <img src={katie.src} alt="Katie Haus" />
-  <h1>👋 Hi, I’m Katie</h1>
+  <Heading tagName="h1" tagSize="h2">👋 Hi, I’m Katie</Heading>
   <p>I’m a self-taught designer and developer obsessed with quality.</p>
   <div class="columns">
     {
