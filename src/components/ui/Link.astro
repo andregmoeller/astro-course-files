@@ -1,0 +1,26 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+export interface LinkProps extends HTMLAttributes<"a"> {
+  href: string;
+  variant?: "primary" | "secondary" | "ghost" | "icon";
+}
+
+const { href, variant = "primary", ...rest } = Astro.props;
+
+const isExternal = href.startsWith("http");
+const externalProps = isExternal
+  ? { target: "_blank", rel: "noopener noreferrer" }
+  : {};
+
+const isActive = href === Astro.url.pathname || (href === "/" && Astro.url.pathname.endsWith("/"));
+---
+
+<a
+  href={href}
+  class:list={["link", variant, { active: isActive }]}
+  {...rest}
+  {...externalProps}
+>
+  <slot />
+</a>
