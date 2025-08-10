@@ -512,8 +512,8 @@ time {
 	}
 }
 
-/* features */
-.features {
+/* why-work-with-me */
+.why-work-with-me {
 	background-color: var(--color-muted);
 	padding: var(--space-xl) var(--space-md);
 	> div {
