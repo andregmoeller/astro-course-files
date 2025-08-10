@@ -27,7 +27,7 @@ const { page } = Astro.props;
   <BlogHero currentPage={page.currentPage} />
   <div class="container">
     <section aria-label="Blog Pposts" class="grid-wrapper">
-      {page.data.map((post) => <BlogCard post={post} />)}
+      {page.data.map((post) => <BlogCard post={post} tagName="h2" />)}
     </section>
     <Pagination prev={page.url.prev} next={page.url.next} />
   </div>

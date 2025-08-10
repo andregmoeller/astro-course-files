@@ -33,7 +33,7 @@ const posts = await getCollection("blogPosts", ({ data }) => !data.isDraft);
               new Date(a.data.pubDate).getTime()
           )
           .slice(0, 3)
-          .map((post) => <BlogCard post={post} />)
+          .map((post) => <BlogCard post={post} tagName="h3" />)
       }
     </div>
   </section>
