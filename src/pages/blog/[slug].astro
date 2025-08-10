@@ -7,6 +7,7 @@ import Layout from "@/layouts/Layout.astro";
 import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import { render } from "astro:content";
+import AuthorCard from "@/components/blog/AuthorCard.astro";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("blogPosts", ({ data }) => !data.isDraft);
@@ -42,4 +43,5 @@ const author = await getEntry(post.data.author.collection, post.data.author.id);
   <section aria-label="Blog content" class="blog-content">
     <Content />
   </section>
+  <AuthorCard />
 </Layout>
