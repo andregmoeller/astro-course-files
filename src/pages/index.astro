@@ -1,12 +1,18 @@
 ---
 import Hero from "@/components/Hero.astro";
-import Projects from "@/components/home/Projects.astro";
+import Projects from "@/components/Projects.astro";
 import WhyWorkWithMe from "@/components/home/WhyWorkWithMe.astro";
+import Heading from "@/components/ui/Heading.astro";
 import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout>
   <Hero />
   <WhyWorkWithMe />
-  <Projects />
+  <section aria-labelledby="recent-projects" class="container rows">
+    <Heading tagName="h2" tagSize="h2" id="recent-projects">
+      Recent Projects
+    </Heading>
+    <Projects limit={3} />
+  </section>
 </Layout>
