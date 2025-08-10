@@ -1,0 +1,17 @@
+---
+import { getCollection } from "astro:content";
+
+import Heading from "@/components/ui/Heading.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+
+const projects = await getCollection("projects");
+---
+
+<section aria-labelledby="recent-projects" class="container rows">
+  <Heading tagName="h2" tagSize="h2" id="recent-projects">
+    Recent Projects
+  </Heading>
+  <div class="grid-wrapper">
+    {projects.slice(0, 3).map((project) => <ProjectCard project={project} />)}
+  </div>
+</section>

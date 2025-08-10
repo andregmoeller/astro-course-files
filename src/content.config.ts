@@ -10,4 +10,15 @@ const whyWorkWithMe = defineCollection({
   }),
 });
 
-export const collections = { whyWorkWithMe };
+const projects = defineCollection({
+  loader: file("src/content/projects.yaml"),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().max(65),
+      href: z.string().url(),
+      image: image(),
+    }),
+});
+
+
+export const collections = { whyWorkWithMe, projects };
