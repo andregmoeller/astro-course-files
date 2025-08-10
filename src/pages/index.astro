@@ -1,9 +1,14 @@
 ---
+import { getCollection } from "astro:content";
+
 import Hero from "@/components/Hero.astro";
 import Projects from "@/components/Projects.astro";
 import WhyWorkWithMe from "@/components/home/WhyWorkWithMe.astro";
 import Heading from "@/components/ui/Heading.astro";
+import BlogCard from "@/components/blog/BlogCard.astro";
 import Layout from "@/layouts/Layout.astro";
+
+const posts = await getCollection("blogPosts", ({ data }) => !data.isDraft);
 ---
 
 <Layout>
@@ -14,5 +19,22 @@ import Layout from "@/layouts/Layout.astro";
       Recent Projects
     </Heading>
     <Projects limit={3} />
+  </section>
+  <section aria-labelledby="recent-posts" class="container rows">
+    <Heading tagName="h2" tagSize="h2" id="recent-posts">
+      Latest Blog Posts
+    </Heading>
+    <div class="grid-wrapper">
+      {
+        posts
+          .sort(
+            (a, b) =>
+              new Date(b.data.pubDate).getTime() -
+              new Date(a.data.pubDate).getTime()
+          )
+          .slice(0, 3)
+          .map((post) => <BlogCard post={post} />)
+      }
+    </div>
   </section>
 </Layout>
