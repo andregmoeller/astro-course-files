@@ -18,7 +18,7 @@ const posts = await getCollection("blogPosts", ({ data }) => !data.isDraft);
     <Heading tagName="h2" tagSize="h2" id="recent-projects">
       Recent Projects
     </Heading>
-    <Projects limit={3} />
+    <Projects limit={3} tagName="h3" />
   </section>
   <section aria-labelledby="recent-posts" class="container rows">
     <Heading tagName="h2" tagSize="h2" id="recent-posts">
