@@ -7,6 +7,7 @@ import WhyWorkWithMe from "@/components/home/WhyWorkWithMe.astro";
 import Heading from "@/components/ui/Heading.astro";
 import BlogCard from "@/components/blog/BlogCard.astro";
 import Layout from "@/layouts/Layout.astro";
+import Connect from "@/components/Connect.astro";
 
 const posts = await getCollection("blogPosts", ({ data }) => !data.isDraft);
 ---
@@ -20,6 +21,7 @@ const posts = await getCollection("blogPosts", ({ data }) => !data.isDraft);
     </Heading>
     <Projects limit={3} tagName="h3" />
   </section>
+  <Connect />
   <section aria-labelledby="recent-posts" class="container rows">
     <Heading tagName="h2" tagSize="h2" id="recent-posts">
       Latest Blog Posts

@@ -9,7 +9,13 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^4.3.0",
     "@astrojs/sitemap": "^3.4.2",
-    "astro": "^5.10.1"
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "astro": "^5.10.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-hot-toast": "^2.5.2"
   }
 }
