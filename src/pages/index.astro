@@ -1,13 +1,21 @@
 ---
-
+import { Image } from "astro:assets";
+import Katie from "../assets/image.jpg";
 ---
 
-<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
   </head>
-  <body> HOME </body>
+  <body>
+    <h1>Astro</h1>
+    <p>Public Image</p>
+    <img src="/image.jpg" alt="Katie Haus" />
+    <p>Assets Image</p>
+    <Image width={40} format="avif" src={Katie} alt="Katie Haus" />
+  </body>
 </html>
