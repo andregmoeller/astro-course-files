@@ -18,7 +18,14 @@ import ReactWrapper from "../components/ReactWrapper";
     <img src="/image.jpg" alt="Katie Haus" />
     <p>Assets Image</p>
     <ReactWrapper>
-      <Image width={150} format="avif" quality="mid" src={Katie} alt="Katie Haus" densities={[1.5, 2]} />
+      <Image 
+        src={Katie} 
+        alt="Katie Haus" 
+        widths={[240, 540, 720, Katie.width]}
+        sizes={`(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, ${Katie.width}px`}
+        format="avif"
+        quality="mid"
+      />
     </ReactWrapper>
   </body>
 </html>
