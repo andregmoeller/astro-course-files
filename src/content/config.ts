@@ -1,5 +1,21 @@
 import { defineCollection, z } from "astro:content";
 
+const posts = defineCollection({
+  type: "content",
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().max(65, {
+        message: "Title cannot be longer than 65 characters",
+      }),
+      description: z.string().max(165, {
+        message: "Description cannot be longer than 165 characters",
+      }),
+      image: image(),
+      pubDate: z.date(),
+      isDraft: z.boolean().optional(),
+    }),
+});
+
 const products = defineCollection({
   type: "data",
   schema: z.object({
@@ -18,4 +34,7 @@ const products = defineCollection({
   })
 });
 
-export const collections = { products };
+export const collections = { 
+  posts,
+  products,
+};

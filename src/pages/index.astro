@@ -1,5 +1,5 @@
 ---
-
+import { baseData } from "@/data/siteData";
 ---
 
 <!doctype html>
@@ -8,6 +8,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={baseData.title}
+      href={`${Astro.site}rss.xml`}
+    />
   </head>
   <body> HOME </body>
 </html>
