@@ -1,8 +1,7 @@
 import { defineMiddleware } from "astro:middleware";
 
-export const onRequest = defineMiddleware(async ({ url }, next) => {
-  if (url.pathname === "/") {
-    return Response.redirect(new URL("/redirected", url), 302);
-  }
+export const onRequest = defineMiddleware(async (context, next) => {
+  context.locals.name = "Chris";
+  
   return next();
 });
