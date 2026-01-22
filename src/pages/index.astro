@@ -1,5 +1,8 @@
 ---
+import { db } from "astro:db";
+import { Logs } from "astro:db";
 
+const logs = await db.select().from(Logs);
 ---
 
 <!doctype html>
@@ -10,6 +13,13 @@
     <title>Document</title>
   </head>
   <body>
-    <p>PRIVATE INFO</p>
+    {
+      logs.map((l) => (
+        <ul>
+          <li>URL: {l.url}</li>
+          <li>DATE: {l.date_accessed.toLocaleDateString()}</li>
+        </ul>
+      ))
+    }
   </body>
 </html>

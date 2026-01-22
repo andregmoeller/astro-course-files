@@ -1,16 +1,14 @@
+import { Logs, db } from "astro:db";
 import { defineMiddleware } from "astro:middleware";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  if (context.url.pathname === "/") {
-    const response = await next();
-    const html = await response.text();
-    const redactedHtml = html.replaceAll("PRIVATE INFO", "REDACTED");
-
-    return new Response(redactedHtml, {
-      status: 200,
-      headers: response.headers,
+  const request = await next();
+  if (request.status !== 200) {
+    console.log("logging error");
+    await db.insert(Logs).values({
+      url: context.url.toString(),
+      date_accessed: new Date(),
     });
   }
-  
-  return next();
+  return request;
 });
