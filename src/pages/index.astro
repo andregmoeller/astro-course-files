@@ -1,5 +1,9 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const products = await getCollection("products");
+console.log("🚀 ~ products:", products);
 ---
 
 <BaseLayout>
