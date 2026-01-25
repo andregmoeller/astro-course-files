@@ -1,5 +1,6 @@
 ---
 import { baseData } from "@/data/siteData";
+import { ClientRouter } from "astro:transitions";
 
 const { title = baseData.title, description = baseData.description } = Astro.props;
 ---
@@ -18,4 +19,5 @@ const { title = baseData.title, description = baseData.description } = Astro.pro
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
     rel="stylesheet"
   />
+  <ClientRouter />
 </head>
