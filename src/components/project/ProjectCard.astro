@@ -13,7 +13,7 @@ const { project, tagName } = Astro.props;
 const { title, href, image } = project.data;
 ---
 
-<article aria-label={title} class="project-card">
+<article aria-label={title} class="project-card" transition:name={href}>
   <img src={image.src} width={400} height={225} alt="" />
   <div class="rows">
     <Heading tagName={tagName}  tagSize="h3">{title}</Heading>
