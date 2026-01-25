@@ -17,14 +17,16 @@ const author = await getEntry(post.data.author.collection, post.data.author.id);
 ---
 
 <article aria-label={title} class="blog-card">
-  <img src={image.src} width={400} height={225} alt="" />
+  <img src={image.src} width={400} height={225} alt="" transition:name={`${slug}-image`} />
   <div class="rows">
-    <Heading tagName={tagName} tagSize="h3">{title}</Heading>
+    <Heading tagName={tagName} tagSize="h3" transition:name={`${slug}-title`}>
+      {title}
+    </Heading>
     <div class="columns">
-      <FormattedDate pubDate={pubDate} />
+      <FormattedDate pubDate={pubDate} transition:name={`${slug}-date`} />
       {author && <small>by {author.data.name}</small>}
     </div>
-    <p>{description}</p>
+    <p transition:name={`${slug}-description`}>{description}</p>
     <Link href={`/blog/${slug}`}>Read Post</Link>
   </div>
 </article>
