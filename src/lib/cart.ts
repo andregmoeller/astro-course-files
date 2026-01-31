@@ -1,4 +1,4 @@
-import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 export type FinalCartItem = {
   product: CollectionEntry<"products">;
   quantity: number;
@@ -20,13 +20,11 @@ export const getTotalCartItems = async (
   return finalCartItems;
 };
 
-export const getProductPrice = async (product: CollectionEntry<"products">) => {
-  const priceItem = await getEntry("prices", product.data.default_price);
-
-  return priceItem
-    ? (priceItem.data.unit_amount / 100).toLocaleString("en-US", {
+export const getProductPrice = (product: CollectionEntry<"products">) => {
+  return product.data.priceAmount
+    ? (product.data.priceAmount / 100).toLocaleString("en-US", {
         style: "currency",
-        currency: priceItem?.data.currency,
+        currency: product.data.currency,
       })
     : "N/A";
 };

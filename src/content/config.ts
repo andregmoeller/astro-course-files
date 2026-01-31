@@ -10,7 +10,7 @@ const products = defineCollection({
       limit: 100,
       expand: ['data.default_price']
     });
-
+    
     return data.map((product) => ({
       id: product.id,
       title: product.name,
