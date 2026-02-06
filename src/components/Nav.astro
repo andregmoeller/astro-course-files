@@ -1,12 +1,18 @@
 ---
 import { Icon } from "astro-icon/components";
 
-let cartItemsCount = 0;
-
-if (Astro.cookies.has("cartItems")) {
-  const cookie = Astro.cookies.get("cartItems")?.value as unknown as string;
-  cartItemsCount = JSON.parse(cookie).length;
+function getCartItemsCount(): number {
+  try {
+    const cookie = Astro.cookies.get("cartItems")?.value;
+    if (!cookie) return 0;
+    const parsed = JSON.parse(cookie);
+    return Array.isArray(parsed) ? parsed.length : 0;
+  } catch {
+    return 0;
+  }
 }
+
+const cartItemsCount = getCartItemsCount();
 ---
 
 <nav>
@@ -17,6 +23,35 @@ if (Astro.cookies.has("cartItems")) {
     </a>
     <a href="/cart" class="btn icon" aria-label="Go to Checkout">
       <Icon name="cart" width="32" height="32" />
+      <span id="cart-count">
+        {cartItemsCount > 0 ? cartItemsCount : ""}
+      </span>
     </a>
   </div>
 </nav>
+
+<script>
+  import { getCartCookie } from "@/lib/utils";
+
+  function initCartCounter() {
+    const countCartSpan = document.querySelector("#cart-count");
+    if (!countCartSpan) return;
+
+    const updateCartValue = () => {
+      const cartItems = getCartCookie();
+      countCartSpan.textContent =
+        cartItems.length === 0 ? "" : cartItems.length.toString();
+    };
+
+    document.addEventListener("cart:updated", updateCartValue);
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => document.removeEventListener("cart:updated", updateCartValue),
+      { once: true }
+    );
+  }
+
+  initCartCounter();
+  document.addEventListener("astro:after-swap", initCartCounter);
+</script>
