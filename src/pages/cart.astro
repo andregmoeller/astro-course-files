@@ -26,3 +26,14 @@ const totalCartItems = await getTotalCartItems(
     </div>
   )}
 </BaseLayout>
+
+<script>
+import { deleteCartCookie } from "@/lib/utils";
+
+  const deleteCartBtn = document.querySelector("#delete-cart-btn");
+
+  deleteCartBtn?.addEventListener("click", () => {
+    deleteCartCookie();
+    window.location.href = "/"
+  })
+</script>
