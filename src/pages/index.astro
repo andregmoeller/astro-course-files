@@ -8,6 +8,7 @@ import Heading from "@/components/ui/Heading.astro";
 import BlogCard from "@/components/blog/BlogCard.astro";
 import Layout from "@/layouts/Layout.astro";
 import Connect from "@/components/Connect.astro";
+import Counter from "@/components/Counter";
 
 const posts = await getCollection("blogPosts", ({ data }) => !data.isDraft);
 ---
@@ -19,6 +20,7 @@ const posts = await getCollection("blogPosts", ({ data }) => !data.isDraft);
       type="video/mp4"
     />
   </video>
+  <Counter client:load pageTitle="Home" transition:persist="react-counter" />
   <Hero />
   <WhyWorkWithMe />
   <section aria-labelledby="recent-projects" class="container rows">

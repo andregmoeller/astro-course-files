@@ -1,4 +1,5 @@
 ---
+import Counter from "@/components/Counter";
 import ProjectWrapper from "@/components/project/Projects.astro";
 import Heading from "@/components/ui/Heading.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -11,6 +12,7 @@ import Layout from "@/layouts/Layout.astro";
       type="video/mp4"
     />
   </video>
+  <Counter client:load pageTitle="Projects" transition:persist="react-counter" />
   <div class="container rows">
     <Heading tagName="h1" tagSize="h1">Latest Projects</Heading>
     <ProjectWrapper tagName="h2" />
