@@ -1,0 +1,63 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import type { Lang } from "../i18n/defaultLangOptions";
+
+const navItems = {
+  en: [
+    {
+      href: "/",
+      text: "Home",
+    },
+    {
+      href: "about",
+      text: "About",
+    },
+    {
+      href: "blog",
+      text: "Blog",
+    },
+  ],
+  es: [
+    {
+      href: "/",
+      text: "Inicio",
+    },
+    {
+      href: "about",
+      text: "Nosotros",
+    },
+    {
+      href: "blog",
+      text: "Blog",
+    },
+  ],
+};
+
+const currentLocale = Astro.currentLocale as Lang;
+---
+
+<nav>
+  <ul>
+    {
+      navItems[currentLocale].map((item) => (
+        <li>
+          <a href={getRelativeLocaleUrl(currentLocale, item.href)}>
+            {item.text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>

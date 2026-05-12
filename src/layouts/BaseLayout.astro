@@ -1,0 +1,66 @@
+---
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
+
+type Props = {
+  title: string;
+};
+
+const { title } = Astro.props;
+
+const currentLocale = Astro.currentLocale;
+---
+
+<html lang={currentLocale}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Nav />
+    <main>
+      <slot />
+    </main>
+    <Footer>
+      {/* 
+        ARCHITECTURE NOTE & TODO: 
+        Using inline ternaries for translations (e.g., currentLocale === "es" ? "..." : "...") 
+        does not scale well as the app grows or when adding more languages. 
+        For a production-grade approach, extract these strings into a centralized 
+        dictionary (similar to `navItems` in Nav.astro) or integrate a dedicated 
+        i18n library. 
+      */}
+      <p>
+        {
+          currentLocale === "es"
+            ? "Gracias por visitar!"
+            : "Thanks for visiting!"
+        }
+      </p>
+    </Footer>
+    <style is:global>
+      @import "https://unpkg.com/open-props";
+      @import "https://unpkg.com/open-props/normalize.min.css";
+
+      body {
+        max-width: 60ch;
+        padding: 1em;
+        margin: 0 auto;
+        font-size: 1.25rem;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        justify-items: center;
+        min-height: 100vh;
+      }
+
+      main {
+        display: grid;
+        place-content: center;
+        text-align: center;
+      }
+    </style>
+  </body>
+</html>
