@@ -1,0 +1,33 @@
+---
+import { Languages } from "../i18n/defaultLangOptions";
+
+const currentLocale = Astro.currentLocale;
+---
+
+{/* Accessibility Fix: aria-label hinzugefügt */}
+<select name="lang" id="lang" aria-label="Select language">
+  {
+    Languages.map((lang) => (
+      <option value={lang.value} selected={lang.value === currentLocale}>
+        {lang.name}
+      </option>
+    ))
+  }
+</select>
+
+<script>
+  const select = document.querySelector("#lang") as HTMLSelectElement;
+  select.addEventListener("change", () => {
+    const newLocale = select.value;
+    
+    // A robust approach using the URL API (preserves query parameters and hashes!)
+    const url = new URL(window.location.href);
+    const pathParts = url.pathname.split("/");
+    
+    // pathParts[1] is the current locale (e.g., "en" or "es"), since the path begins with "/"
+    pathParts[1] = newLocale; 
+    url.pathname = pathParts.join("/");
+    
+    window.location.assign(url.toString());
+  });
+</script>

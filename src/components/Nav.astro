@@ -1,6 +1,7 @@
 ---
-import { getRelativeLocaleUrl } from "astro:i18n";
 import type { Lang } from "../i18n/defaultLangOptions";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import LanguagePicker from "./LanguagePicker.astro";
 
 const navItems = {
   en: [
@@ -48,9 +49,17 @@ const currentLocale = Astro.currentLocale as Lang;
       ))
     }
   </ul>
+  <LanguagePicker />
 </nav>
 
 <style>
+  nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
   ul {
     display: flex;
     justify-content: center;
