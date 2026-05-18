@@ -1,0 +1,39 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import { Languages } from "../../i18n/defaultLangOptions";
+import { getPostSlugWithoutLang } from "../../i18n/getPostSlugWithoutLang";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export const getStaticPaths = (() => {
+  const languageValues = Languages.map((lang) => lang.value);
+  return languageValues.map((lang) => ({
+    params: {
+      lang,
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { lang } = Astro.params;
+
+const blogPosts = await getCollection("blog", (post) =>
+  post.slug.startsWith(lang)
+);
+
+const title = lang === "es" ? "Publicaciones de blog" : "Blog Posts";
+---
+
+<BaseLayout title={title}>
+  <h1>{title}</h1>
+  <ul>
+    {
+      blogPosts.map((post) => (
+        <li>
+          <a href={`/${lang}/blog/${getPostSlugWithoutLang(post.slug)}`}>
+            <h2>{post.data.title}</h2>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

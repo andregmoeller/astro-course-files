@@ -1,0 +1,36 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import { getPostLang } from "../../../i18n/getPostLang";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { getPostSlugWithoutLang } from "../../../i18n/getPostSlugWithoutLang";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+export const getStaticPaths = (async () => {
+  const blogPosts = await getCollection("blog");
+
+  return blogPosts.map((post) => {
+    const lang = getPostLang(post.slug);
+    const slug = getPostSlugWithoutLang(post.slug);
+    return {
+      params: { lang, slug },
+      props: { post },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { lang } = Astro.params;
+
+const { post } = Astro.props;
+
+const { Content } = await post.render();
+---
+
+<BaseLayout title={post.data.title}>
+  <a href={getRelativeLocaleUrl(lang, "blog")}>
+    {lang === "es" ? "Volver al blog" : "Back to Blog"}
+  </a>
+  <h1>{post.data.title}</h1>
+  <p>{post.data.description}</p>
+  <Content />
+</BaseLayout>
