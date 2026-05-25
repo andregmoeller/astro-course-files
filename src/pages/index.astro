@@ -1,5 +1,9 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
----
+import { defaultLanguage } from "../i18n/defaultLangOptions";
 
-<BaseLayout title="Homepage"> Homepage </BaseLayout>
+export const prerender = false;
+
+const locale = Astro.preferredLocale ?? defaultLanguage;
+
+return Astro.redirect(`/${locale}/`, 307);
+---

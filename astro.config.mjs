@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
@@ -8,6 +9,7 @@ export default defineConfig({
     locales: ["es", "en"],
     routing: {
       prefixDefaultLocale: true,
+      redirectToDefaultLocale: false,
     },
   /* 
     ARCHITECTURE NOTE / UX DEBT:
@@ -21,4 +23,7 @@ export default defineConfig({
       es: "en",
     },
   },
+  adapter: node({
+    mode: 'standalone',
+  }),
 });
