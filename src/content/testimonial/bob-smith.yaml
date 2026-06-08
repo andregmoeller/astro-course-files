@@ -1,0 +1,9 @@
+name: Bob Smith
+role: Marketing Director, InnovateCo
+image: "src/assets/testimonial/bob-smith/image.jpeg"
+rating: 4
+content: >-
+  Incredible customer service and a game-changing platform. We're very
+  impressed!
+date: 2024-10-23
+isFeatured: true
