@@ -110,7 +110,8 @@ export default config({
           validation: {
             isRequired: true,
           },
-          publicPath: "src/assets/testimonial/",
+          publicPath: "../../assets/testimonial/",
+          directory: "src/assets/testimonial/",
         }),
       },
     }),
