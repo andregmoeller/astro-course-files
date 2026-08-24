@@ -22,6 +22,17 @@
     "slug": {
       "type": "uid",
       "targetField": "title"
+    },
+    "primary_heading": {
+      "type": "component",
+      "component": "elements.heading",
+      "repeatable": false
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "section.testimonial-section"
+      ]
     }
   }
 }
