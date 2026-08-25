@@ -1,31 +1,8 @@
 ---
-import { getCollection, getEntries, getEntry, type CollectionEntry } from "astro:content";
 import { TestimonialCard } from "../components/Testimonials";
+import { getTestimonialSection } from "../lib/cms";
 
-// === START DEBUGGING ===
-const allKeystatic = await getCollection("keystatic");
-console.log("🔍 ASTRO HAT DIESE IDs GEFUNDEN:", allKeystatic.map(doc => doc.id));
-// === END DEBUGGING ===
-
-const testimonialSection = await getEntry("keystatic", "testimonialsection");
-
-if (!testimonialSection) {
-  throw new Error("CMS ERROR: Die Datei 'testimonialSection.yaml' wurde im Ordner 'src/content/keystatic/' nicht gefunden.");
-}
-
-const testimonials = await getEntries(testimonialSection.data.testimonials);
-
-const testimonialData = {
-  heading: testimonialSection.data.heading,
-  testimonials: testimonials.map(({ data }: CollectionEntry<"testimonial">) => {
-    return {
-      ...data,
-      image: data.image.src,
-    };
-   }),
-};
-
-export type TestimonialSectionType = typeof testimonialData;
+const testimonialData = await getTestimonialSection();
 ---
 
 <!doctype html>
