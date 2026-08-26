@@ -12,17 +12,17 @@ const HeadingSchema = z.object({
 const TestimonialSchema = z.object({
   name: z.string(),
   role: z.string(),
-  rating: z.number().int().min(0).max(5),
+  rating: z.number().int().min(1).max(5),
   content: z.string(),
   date: z.string(),
   isFeatured: z.boolean(),
-  image: z.object({ url: z.string() }).nullable(),
+  image: z.object({ url: z.string() }),
 });
 
 const TestimonialSectionSchema = z.object({
   __component: z.literal("section.testimonial-section"),
-  heading: HeadingSchema.nullable(),
-  testimonials: z.array(TestimonialSchema),
+  heading: HeadingSchema,
+  testimonials: z.array(TestimonialSchema).min(1),
 });
 
 const BlockSchema = z.discriminatedUnion("__component", [TestimonialSectionSchema]);
@@ -65,13 +65,13 @@ export async function getTestimonialSection(slug = "home"): Promise<TestimonialD
 
   const section = page.blocks.find((b) => b.__component === "section.testimonial-section");
   if (!section) throw new Error(`The page "${slug}" does not contain a testimonial block`);
-  if (!section.heading) throw new Error(`The testimonial block on "${slug}" has no heading`);
 
   return {
     heading: section.heading,
-    testimonials: section.testimonials.map((t) => {
-      if (!t.image) throw new Error(`Testimonial "${t.name}" has no image`);
-      return { ...t, image: `${BASE_URL}${t.image.url}`, date: new Date(t.date) };
-    }),
+    testimonials: section.testimonials.map((t) => ({
+      ...t,
+      image: `${BASE_URL}${t.image.url}`,
+      date: new Date(t.date),
+    })),
   };
 }

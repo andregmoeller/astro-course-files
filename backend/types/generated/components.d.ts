@@ -46,7 +46,13 @@ export interface SectionTestimonialSection extends Struct.ComponentSchema {
   attributes: {
     heading: Schema.Attribute.Component<'elements.heading', false> &
       Schema.Attribute.Required;
-    testimonials: Schema.Attribute.Component<'blocks.testimonial', true>;
+    testimonials: Schema.Attribute.Component<'blocks.testimonial', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
   };
 }
 

@@ -21,7 +21,8 @@
     },
     "slug": {
       "type": "uid",
-      "targetField": "title"
+      "targetField": "title",
+      "required": true
     },
     "primary_heading": {
       "type": "component",

@@ -14,7 +14,8 @@
     "testimonials": {
       "type": "component",
       "component": "blocks.testimonial",
-      "repeatable": true
+      "repeatable": true,
+      "min": 1
     }
   },
   "config": {}
