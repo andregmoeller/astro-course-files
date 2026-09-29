@@ -1,13 +1,13 @@
 ---
+import BaseLayout from "@/layout/BaseLayout.astro";
+import BookCard from "@/components/BookCard.astro";
+import { Book, db } from "@/db/client";
 
+const books = await db.select().from(Book);
+console.log("🚀 ~ books:", books);
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body> HOME </body>
-</html>
+<BaseLayout>
+  <h1>Bookends Library</h1>
+  {books.map((book) => <BookCard book={book} />)}
+</BaseLayout>
