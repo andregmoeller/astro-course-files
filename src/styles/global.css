@@ -74,7 +74,7 @@ svg {
   --color-error: #fa465f;
   --color-muted: #919595;
   --shadow: 0 6px 15px hsl(0, 0%, 7%, 30%);
-  color-scheme: dark light;
+  color-scheme: dark;
 
   --fs-2xs: clamp(0.64rem, 0.6552rem + -0.0196vw, 0.6513rem);
   --fs-xs: clamp(0.7813rem, 0.7747rem + 0.0326vw, 0.8rem);
@@ -333,6 +333,7 @@ form {
 }
 
 [type="search"] {
+  color: var(--color-text);
   background-color: var(--color-bkg);
   padding: var(--space-xs) var(--space-sm);
   border: none;
@@ -342,6 +343,9 @@ form {
   width: 100%;
   font-size: var(--fs-lg);
   transition: background-color var(--slow) var(--cubic);
+  &::placeholder {
+    color: var(--color-muted);
+  }
   &:focus {
     outline: none;
     background-color: var(--color-base);
