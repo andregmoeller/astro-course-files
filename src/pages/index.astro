@@ -2,11 +2,66 @@
 import BaseLayout from "@/layout/BaseLayout.astro";
 import BookCard from "@/components/BookCard.astro";
 import { Book, db } from "@/db/client";
+import type { TBook } from "@/types/Books";
 
 const books = await db.select().from(Book);
+
+const booksByStatus = books.reduce(
+  (acc, book) => {
+    acc[book.status].push(book);
+    return acc;
+  },
+  {
+    reading: [],
+    to_read: [],
+    read: [],
+  } as Record<TBook["status"], TBook[]>
+);
 ---
 
 <BaseLayout>
   <h1>Bookends Library</h1>
-  {books.map((book) => <BookCard book={book} />)}
+
+  {
+    booksByStatus.reading.length > 0 && (
+      <section
+        class="book-list-section-wrapper"
+        aria-label="Books I'm currently reading"
+      >
+        <h2>Currently Reading</h2>
+        <ul class="book-card-list">
+          {booksByStatus.reading.map((book) => (
+            <BookCard book={book} />
+          ))}
+        </ul>
+      </section>
+    )
+  }
+  {
+    booksByStatus.to_read.length > 0 && (
+      <section
+        class="book-list-section-wrapper"
+        aria-label="Books I want to read"
+      >
+        <h2>Want to Read</h2>
+        <ul class="book-card-list">
+          {booksByStatus.to_read.map((book) => (
+            <BookCard book={book} />
+          ))}
+        </ul>
+      </section>
+    )
+  }
+  {
+    booksByStatus.read.length > 0 && (
+      <section class="book-list-section-wrapper" aria-label="Books I've Read">
+        <h2>Books I've Read</h2>
+        <ul class="book-card-list">
+          {booksByStatus.read.map((book) => (
+            <BookCard book={book} />
+          ))}
+        </ul>
+      </section>
+    )
+  }
 </BaseLayout>
