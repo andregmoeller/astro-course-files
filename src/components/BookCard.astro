@@ -1,6 +1,8 @@
 ---
 import type { TBook } from "@/types/Books";
 import ReadingSelect from "./ReadingSelect.astro";
+import BookCover from "./BookCover.astro";
+import AuthorPill from "./AuthorPill.astro";
 
 type Props = {
   book: TBook;
@@ -11,21 +13,8 @@ const { book } = Astro.props;
 
 <li class="book-card">
   <ReadingSelect selectData={{ status: book.status, id: book.id }} />
-  {
-    book.cover ? (
-      <img
-        src={book.cover}
-        alt={book.title}
-        loading="lazy"
-        decoding="async"
-        width="225"
-        height="320"
-      />
-    ) : (
-      <div class="cover-placeholder" aria-hidden="true">No cover</div>
-    )
-  }
+  <BookCover cover={book.cover} title={book.title} />
   <h3>{book.title}</h3>
-  {book.author.length > 0 && <p>by {new Intl.ListFormat().format(book.author)}</p>}
+  <AuthorPill author={book.author} />
   <a href={`/book/${book.id}`} class="btn">View Book</a>
 </li>

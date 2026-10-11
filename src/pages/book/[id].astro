@@ -1,0 +1,41 @@
+---
+import AuthorPill from "@/components/AuthorPill.astro";
+import BookCover from "@/components/BookCover.astro";
+import ReadingSelect from "@/components/ReadingSelect.astro";
+import { db } from "@/db/client";
+import { Book } from "@/db/schema";
+import BaseLayout from "@/layout/BaseLayout.astro";
+import { eq } from "drizzle-orm";
+
+export const prerender = false;
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/");
+}
+
+const [book] = await db.select().from(Book).where(eq(Book.id, id));
+
+if (!book) {
+  return Astro.redirect("/");
+}
+
+const { author, cover, status, title } = book;
+---
+
+<BaseLayout title={title}>
+  <div class="grid-md">
+    <div class="book-layout">
+      <BookCover cover={cover} title={title} loading="eager" />
+      <div class="grid-sm">
+        <h1>{title}</h1>
+        <AuthorPill author={author} />
+        <ReadingSelect selectData={{ status, id }} />
+      </div>
+    </div>
+    <button class="remove-book-button btn warning" data-id={id}
+      >Remove from Library</button
+    >
+  </div>
+</BaseLayout>

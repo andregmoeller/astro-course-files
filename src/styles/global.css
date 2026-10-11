@@ -294,33 +294,31 @@ nav div {
   padding: var(--space-md);
   box-shadow: var(--shadow);
   max-width: fit-content;
-  img {
+  img,
+  .cover-placeholder {
     width: 225px;
     height: 320px;
+  }
+  img {
     object-fit: contain;
   }
   h2,
   h3 {
     font-size: var(--fs-lg);
   }
-  .cover-placeholder {
-    width: 225px;
-    height: 320px;
-    display: grid;
-    place-items: center;
-    border-radius: var(--rounded-sm);
-    background-color: var(--color-bkg);
-    color: var(--color-muted);
-  }
 }
 
 .book-layout {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-md);
   align-items: center;
-  img {
+  img,
+  .cover-placeholder {
     width: 315px;
     height: 560px;
+  }
+  img {
     object-fit: contain;
   }
 }
@@ -359,6 +357,14 @@ form {
     outline: none;
     background-color: var(--color-base);
   }
+}
+
+.cover-placeholder {
+  display: grid;
+  place-items: center;
+  border-radius: var(--rounded-sm);
+  background-color: var(--color-bkg);
+  color: var(--color-muted);
 }
 
 .custom-select {

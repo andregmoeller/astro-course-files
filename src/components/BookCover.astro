@@ -1,0 +1,24 @@
+---
+import type { TBook } from "@/types/Books";
+
+type Props = Pick<TBook, "cover" | "title"> & {
+  loading?: "lazy" | "eager";
+};
+
+const { cover, title, loading = "lazy" } = Astro.props;
+---
+
+{
+  cover ? (
+    <img
+      src={cover}
+      alt={title}
+      loading={loading}
+      decoding="async"
+      width="225"
+      height="320"
+    />
+  ) : (
+    <div class="cover-placeholder" aria-hidden="true">No cover</div>
+  )
+}
