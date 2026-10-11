@@ -11,15 +11,21 @@ const { book } = Astro.props;
 
 <li class="book-card">
   <ReadingSelect selectData={{ status: book.status, id: book.id }} />
-  <img
-    src={book.cover}
-    alt={book.title}
-    loading="lazy"
-    decoding="async"
-    width="225px"
-    height="320px"
-  />
+  {
+    book.cover ? (
+      <img
+        src={book.cover}
+        alt={book.title}
+        loading="lazy"
+        decoding="async"
+        width="225"
+        height="320"
+      />
+    ) : (
+      <div class="cover-placeholder" aria-hidden="true">No cover</div>
+    )
+  }
   <h3>{book.title}</h3>
-  <p>by {new Intl.ListFormat().format(book.author)}</p>
+  {book.author.length > 0 && <p>by {new Intl.ListFormat().format(book.author)}</p>}
   <a href={`/book/${book.id}`} class="btn">View Book</a>
 </li>

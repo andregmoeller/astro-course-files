@@ -4,6 +4,6 @@ export const Book = sqliteTable("Book", {
   id: text().primaryKey(),
   title: text().notNull(),
   author: text({ mode: "json" }).$type<string[]>().notNull(),
-  cover: text().notNull(),
+  cover: text(),
   status: text({ enum: ["reading", "read", "to_read"] }).notNull(),
 });

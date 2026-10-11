@@ -303,6 +303,15 @@ nav div {
   h3 {
     font-size: var(--fs-lg);
   }
+  .cover-placeholder {
+    width: 225px;
+    height: 320px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--rounded-sm);
+    background-color: var(--color-bkg);
+    color: var(--color-muted);
+  }
 }
 
 .book-layout {

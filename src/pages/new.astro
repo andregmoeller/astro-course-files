@@ -68,7 +68,7 @@ import BaseLayout from "@/layout/BaseLayout.astro";
 </BaseLayout>
 
 <script>
-  import type { TBook } from "@/types/Books";
+  import type { TBookSearchResult } from "@/types/Books";
 
   const newBookSearchForm = document.querySelector(
     "#new-book-search-form"
@@ -78,10 +78,14 @@ import BaseLayout from "@/layout/BaseLayout.astro";
   ) as HTMLUListElement;
 
   // helper functions
-  const renderBookCardHTML = (book: TBook) => `<li class="book-card">
-    <img src="${book.cover}" alt="${book.title}" loading="lazy" decoding="async" class="book-cover" />
+  const renderBookCardHTML = (book: TBookSearchResult) => `<li class="book-card">
+      ${
+        book.cover
+          ? `<img src="${book.cover}" alt="${book.title}" loading="lazy" decoding="async" class="book-cover" />`
+          : `<div class="cover-placeholder" aria-hidden="true">No cover</div>`
+      }
       <h2>${book.title}</h2>
-      <p>by ${new Intl.ListFormat().format(book.author)}</p>
+      ${book.author.length > 0 ? `<p>by ${new Intl.ListFormat().format(book.author)}</p>` : ""}
       <button class="add-book-checkbox btn" data-book=${encodeURIComponent(JSON.stringify(book))}>Add to Library</button>
     </li>`;
 
@@ -112,7 +116,7 @@ import BaseLayout from "@/layout/BaseLayout.astro";
       }
 
       newBookList.innerHTML = data
-        .map((book: TBook) => renderBookCardHTML(book))
+        .map((book: TBookSearchResult) => renderBookCardHTML(book))
         .join("");
       newBookSearchForm.removeAttribute("disabled");
     } catch (error) {

@@ -4,7 +4,6 @@ import BookCard from "@/components/BookCard.astro";
 import { Book, db } from "@/db/client";
 
 const books = await db.select().from(Book);
-console.log("🚀 ~ books:", books);
 ---
 
 <BaseLayout>

@@ -27,8 +27,8 @@ export const GET: APIRoute = async ({ request }) => {
     // query the response for the data we want
     const books = data.docs.map((book: OpenLibraryDocsItem) => ({
       title: book.title,
-      author: book.author_name,
-      cover: `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`,
+      author: book.author_name ?? [],
+      cover: book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg` : null,
       id: book.key.replaceAll("/works/", ""),
     }));
 
