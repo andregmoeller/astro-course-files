@@ -78,6 +78,14 @@ import BaseLayout from "@/layout/BaseLayout.astro";
   ) as HTMLUListElement;
 
   // helper functions
+  async function parseResponse<T>(res: Response, fallback: string): Promise<T> {
+    const body = await res.json().catch(() => null);
+    if (!res.ok || body?.error) {
+      throw new Error(body?.error ?? fallback);
+    }
+    return body.data;
+  }
+
   const renderBookCardHTML = (book: TBookSearchResult) => `<li class="book-card">
       ${
         book.cover
@@ -106,22 +114,43 @@ import BaseLayout from "@/layout/BaseLayout.astro";
         `/api/books.json?search=${encodeURIComponent(search)}`
       );
 
-      if (!res.ok) {
-        throw new Error("Unable to fetch books");
-      }
+      const books = await parseResponse<TBookSearchResult[]>(res, "Failed to fetch books");
 
-      const { error, data } = await res.json();
-      if (error) {
-        throw new Error(error);
-      }
-
-      newBookList.innerHTML = data
-        .map((book: TBookSearchResult) => renderBookCardHTML(book))
+      newBookList.innerHTML = books
+        .map(renderBookCardHTML)
         .join("");
       newBookSearchForm.removeAttribute("disabled");
     } catch (error) {
       console.error(error);
       newBookSearchForm.removeAttribute("disabled");
+      alert(error instanceof Error ? error.message : "Unknown error");
+    }
+  });
+
+  newBookList.addEventListener("click", async (e) => {
+    if (!(e.target as HTMLElement).classList.contains("add-book-checkbox")) {
+      return;
+    }
+
+    const bookData = JSON.parse(
+      decodeURIComponent((e.target as HTMLButtonElement).dataset.book as string)
+    ) as TBookSearchResult;
+
+    try {
+      const res = await fetch("/api/books.json", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookData),
+      });
+
+      await parseResponse(res, "Failed to add book. Please try again later.");
+
+      // redirect to book
+      window.location.href = `/book/${bookData.id}`;
+    } catch (error) {
+      console.error(error);
       alert(error instanceof Error ? error.message : "Unknown error");
     }
   });
