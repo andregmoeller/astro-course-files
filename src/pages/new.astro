@@ -68,6 +68,7 @@ import BaseLayout from "@/layout/BaseLayout.astro";
 </BaseLayout>
 
 <script>
+  import { parseResponse } from "@/lib/api";
   import type { TBookSearchResult } from "@/types/Books";
 
   const newBookSearchForm = document.querySelector(
@@ -78,14 +79,6 @@ import BaseLayout from "@/layout/BaseLayout.astro";
   ) as HTMLUListElement;
 
   // helper functions
-  async function parseResponse<T>(res: Response, fallback: string): Promise<T> {
-    const body = await res.json().catch(() => null);
-    if (!res.ok || body?.error) {
-      throw new Error(body?.error ?? fallback);
-    }
-    return body.data;
-  }
-
   const renderBookCardHTML = (book: TBookSearchResult) => `<li class="book-card">
       ${
         book.cover
