@@ -39,3 +39,28 @@ const { author, cover, status, title } = book;
     >
   </div>
 </BaseLayout>
+
+<script>
+  import { parseResponse } from "@/lib/api";
+
+  const removeButton = document.querySelector<HTMLButtonElement>(".remove-book-button");
+
+  removeButton?.addEventListener("click", async () => {
+    if (!confirm("Remove this book from your library?")) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/books/${removeButton.dataset.id}`, {
+        method: "DELETE",
+      });
+
+      await parseResponse(res, "Failed to delete book. Please try again.");
+
+      window.location.href = "/";
+    } catch (error) {
+      console.error(error);
+      alert(error instanceof Error ? error.message : "Unknown error");
+    }
+  });
+</script>
