@@ -42,3 +42,33 @@ export const PATCH: APIRoute = async ({ request, params }) => {
     );
   }
 };
+
+export const DELETE: APIRoute = async ({ params }) => {
+  const { id } = params;
+
+  if (!id) {
+    return Response.json(
+      { data: null, error: "Missing book id" },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const result = await db.delete(Book).where(eq(Book.id, id));
+
+    if (result.rowsAffected === 0) {
+      return Response.json(
+        { data: null, error: "Book not found" },
+        { status: 404 }
+      );
+    }
+
+    return Response.json({ data: { id }, error: null });
+  } catch (error) {
+    console.error(error);
+    return Response.json(
+      { data: null, error: "Failed to delete book" },
+      { status: 500 }
+    );
+  }
+};
