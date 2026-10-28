@@ -7,8 +7,6 @@ import { Book } from "@/db/schema";
 import BaseLayout from "@/layout/BaseLayout.astro";
 import { eq } from "drizzle-orm";
 
-export const prerender = false;
-
 const { id } = Astro.params;
 
 if (!id) {

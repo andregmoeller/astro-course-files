@@ -5,8 +5,6 @@ import type { APIRoute } from "astro";
 import { DrizzleQueryError } from "drizzle-orm";
 import z from "zod";
 
-export const prerender = false;
-
 const NewBookSchema = z.object({
   id: z.string().min(1),
   title: z.string().min(1),

@@ -3,8 +3,6 @@ import { eq } from "drizzle-orm";
 import z from "zod";
 import { db, Book, BOOK_STATUSES } from "@/db/client";
 
-export const prerender = false;
-
 const StatusUpdateSchema = z.object({
   status: z.enum(BOOK_STATUSES),
 });
