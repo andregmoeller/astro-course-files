@@ -1,0 +1,42 @@
+---
+import BaseLayout from "@/layout/BaseLayout.astro";
+---
+
+<BaseLayout title="Register">
+  <div class="grid-sm center-layout">
+    <h1>Log In</h1>
+    <form id="login-form" class="grid-xs" action="/api/auth/login">
+      <label>
+        <span>Username</span>
+        <input
+          type="text"
+          name="username"
+          required
+          autocomplete="username"
+        />
+      </label>
+      <label>
+        <span>Password</span>
+        <input
+          type="password"
+          name="password"
+          required
+          autocomplete="current-password"
+        />
+      </label>
+      <button type="submit" class="btn full-width">Log in</button>
+    </form>
+    <p>No account yet? <a href="/register">Register</a></p>
+  </div>
+</BaseLayout>
+
+<script>
+  import { submitAsJson } from "@/lib/forms";
+
+  const form = document.querySelector<HTMLFormElement>("#login-form");
+  if (form) {
+    submitAsJson(form, "Login failed. Please try again.", () => {
+      window.location.href = "/";
+    });
+  }
+</script>

@@ -35,26 +35,12 @@ import BaseLayout from "@/layout/BaseLayout.astro";
 </BaseLayout>
 
 <script>
-  import { parseResponse } from "@/lib/api";
+  import { submitAsJson } from "@/lib/forms";
 
   const form = document.querySelector<HTMLFormElement>("#register-form");
-
-  form?.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    try {
-      const res = await fetch(form.action, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(new FormData(form))),
-      });
-
-      await parseResponse(res, "Failed to create account. Please try again.");
-
+  if (form) {
+    submitAsJson(form, "Failed to create account. Please try again.", () => {
       window.location.href = "/";
-    } catch (error) {
-      console.error(error);
-      alert(error instanceof Error ? error.message : "Unknown error");
-    }
-  });
+    });
+  }
 </script>

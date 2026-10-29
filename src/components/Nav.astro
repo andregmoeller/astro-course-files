@@ -1,3 +1,7 @@
+---
+const { user } = Astro.locals;
+---
+
 <nav>
   <div>
     <a href="/" aria-label="Home" class="btn small">
@@ -32,22 +36,52 @@
       </svg>
       Library
     </a>
-    <a href="/new" class="btn small">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <line x1="12" y1="5" x2="12" y2="19"></line>
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-      </svg>
-      <span>Add New</span>
-    </a>
+    {
+      user ? (
+        <>
+          <a href="/new" class="btn small">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add New</span>
+          </a>
+          <span class="nav-user">{user.username}</span>
+          <button id="logout-button" class="btn small">Log Out</button>
+        </>
+      ) : (
+        <>
+          <a href="/login" class="btn small">Log In</a>
+          <a href="/register" class="btn small">Register</a>
+        </>
+      )
+    }
   </div>
 </nav>
+
+<script>
+  import { parseResponse } from "@/lib/api";
+
+  const button = document.querySelector<HTMLButtonElement>("#logout-button");
+
+  button?.addEventListener("click", async () => {
+    try {
+      const res = await fetch("/api/auth/logout", { method: "POST" });
+      await parseResponse(res, "Logout failed. Please try again.");
+      window.location.href = "/";
+    } catch (error) {
+      console.error(error);
+      alert(error instanceof Error ? error.message : "Unknown error");
+    }
+  });
+</script>
