@@ -6,6 +6,7 @@ import {
   validateSessionToken,
 } from "@/lib/session";
 
+const PUBLIC_API = new Set(["/api/auth/register", "/api/auth/login"]);
 const PROTECTED_PAGES = [/^\/new$/, /^\/book\//];
 const AUTH_PAGES = new Set(["/login", "/register"]);
 
@@ -26,8 +27,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const { pathname } = context.url;
   const isApi = pathname.startsWith("/api/");
   const requiresAuth = isApi
-    ? context.request.method !== "GET"
-    : PROTECTED_PAGES.some((pattern) => pattern.test(pathname));
+  ? context.request.method !== "GET" && !PUBLIC_API.has(pathname)
+  : PROTECTED_PAGES.some((pattern) => pattern.test(pathname));
 
   if (requiresAuth && !context.locals.user) {
     return isApi
